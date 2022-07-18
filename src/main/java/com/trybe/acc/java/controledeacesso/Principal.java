@@ -21,7 +21,7 @@ public class Principal {
       option = scan.nextByte();
       if (option == 1) {
         System.out.println("Entre com a idade:");
-        short age = scan.nextByte();
+        short age = scan.nextShort();
         ages.add(age);
         System.out.println(verifyAge(age));
       } else if (option == 2) {
@@ -31,7 +31,9 @@ public class Principal {
       }
     } while (option != 2);
     
-    finalReport(ages);
+    if (ages.size() != 0) {
+      finalReport(ages);
+    }
     scan.close();    
   }
   
@@ -52,7 +54,36 @@ public class Principal {
    * Método de relatório.
    */
   public static void finalReport(ArrayList<Short> ages) {
-    System.out.print(ages.size());
+    int under = 0;
+    int adult = 0;
+    int over = 0;
+    int total = ages.size();
+
+    for (short age : ages) {      
+      if (age < 18) {
+        under += 1;
+      } else if (age < 50) {
+        adult += 1;
+      } else {
+        over += 1;
+      }
+    }
+    
+    double underPer = (1000 * under / total / 10.0);
+    double adultPer = (1000 * adult / total / 10.0);
+    double overPer = (1000 * over / total / 10.0);
+
+    System.out.println("----- Quantidade -----\n"
+        + "menores: " + under + "\n"
+        + "adultas: " + adult + "\n"
+        + "a partir de 50: " + over + "\n"
+        + "\n"
+        + "----- Percentual -----\n"
+        + "menores: " + underPer + "%\n"
+        + "adultas: " + adultPer + "%\n"
+        + "a partir de 50: " + overPer + "%\n"
+        + "\n"
+        + "TOTAL: " + total);
   }
 
 }
